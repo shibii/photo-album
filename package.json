@@ -2,7 +2,8 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
-    "test": "jest"
+    "test": "jest",
+    "asset-parser": "node asset-parser ./public/photos ./src/stores/assets.json"
   },
   "dependencies": {
     "svelte": "^3.24.0"
