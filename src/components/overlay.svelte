@@ -1,5 +1,5 @@
 <script>
-  import {src, srcset} from '../util/util'
+  import { src, srcset } from "../util/util";
   import { overlay } from "../stores/overlay";
   $: visible = $overlay ? true : false;
 </script>
