@@ -1,4 +1,5 @@
 <script>
+  import './global.css'
   import {onMount} from 'svelte';
   let count = 0;
   onMount(() => {
