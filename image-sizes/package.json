@@ -1,0 +1,15 @@
+{
+  "name": "shibii@image-sizes",
+  "version": "0.1.0",
+  "description": "generates a series of smaller images",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Seppo Kilpeläinen",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^7.1.6",
+    "sharp": "^0.26.2"
+  }
+}

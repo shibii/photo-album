@@ -3,7 +3,8 @@
     "start": "snowpack dev",
     "build": "snowpack build",
     "test": "jest",
-    "asset-parser": "node asset-parser ./public/photos ./src/stores/assets.json"
+    "asset-parser": "node asset-parser ./public/photos ./src/stores/assets.json",
+    "image-sizes": "node image-sizes public/photos/*/w1920.webp"
   },
   "dependencies": {
     "svelte": "^3.24.0"
