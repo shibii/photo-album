@@ -1,11 +1,11 @@
 <script>
   import "./global.css";
-  import Overlay from "./components/overlay.svelte";
   import photos from "./stores/assets.json";
   import { overlay } from "./stores/overlay";
-  import { src, srcset } from "./util/util";
   import Gallery from "./components/gallery.svelte";
   import { onMount } from "svelte";
+  import Photo from "./components/photo.svelte";
+  import Overlay from "./components/overlay.svelte";
 
   let selected;
 
@@ -28,16 +28,11 @@
   }
   .photo {
     grid-area: photo;
-    display: flex;
-    justify-content: center;
     height: 100%;
     width: 100%;
-  }
-  img {
-    max-width: 100%;
-    object-fit: contain;
-    padding: 0 0.5em;
+    display: flex;
     cursor: pointer;
+    padding: 0 0.5em;
   }
 </style>
 
@@ -45,13 +40,9 @@
 
 <div class="layout">
   <div class="gallery">
-    <Gallery setSelected={(sel) => (selected = sel)} />
+    <Gallery bind:selected />
   </div>
-  <div class="photo">
-    <img
-      on:click={() => overlay.set(selected)}
-      alt="generic photograph"
-      src={src(selected)}
-      srcset={srcset(selected)} />
+  <div class="photo" on:click={() => overlay.set(selected)}>
+    <Photo photo={selected} sizes="75vw" />
   </div>
 </div>
