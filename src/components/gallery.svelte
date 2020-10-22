@@ -3,6 +3,7 @@
   import { photos } from "../stores/photos";
   import Photo from "./photo.svelte";
   import { iobserve } from "../actions/iobserve";
+  import Spinner from "./spinner.svelte";
 
   export let selected;
   let gallery = [];
@@ -47,7 +48,7 @@
   .observer {
     width: 100%;
     flex-grow: 1;
-    min-height: 10em;
+    height: auto;
     display: block;
   }
   .observer.allLoaded {
@@ -81,5 +82,7 @@
   <div
     class="observer"
     class:allLoaded
-    use:iobserve={{ onIntersect: () => more(3), delay: 2000, cooldown: 100 }} />
+    use:iobserve={{ onIntersect: () => more(3), delay: 2500, cooldown: 500 }}>
+    <Spinner />
+  </div>
 </div>
