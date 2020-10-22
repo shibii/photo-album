@@ -21,10 +21,6 @@
   .visible {
     visibility: visible;
   }
-  img {
-    width: 100%;
-    object-fit: contain;
-  }
 </style>
 
 <div on:click={() => overlay.set(null)} class="overlay" class:visible>
