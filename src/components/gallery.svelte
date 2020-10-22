@@ -1,70 +1,64 @@
 <script>
   import { onMount } from "svelte";
   import { photos } from "../stores/photos";
-  import { src, srcset } from "../util/util";
+  import Photo from "./photo.svelte";
+  import { iobserve } from "../actions/iobserve";
 
-  export let setSelected;
-  let iobserver;
-  let iotarget;
+  export let selected;
   let gallery = [];
-  let unloaded = 0;
-  $: loading = unloaded !== 0;
+  let allLoaded = false;
 
   const more = (batchSize) => {
-    if (loading) return;
-    unloaded += batchSize;
-    photos(batchSize).then((batch) => {
-      gallery = [...gallery, ...batch];
-    });
+    if (!allLoaded) {
+      photos(batchSize)
+        .then((batch) => {
+          gallery = [...gallery, ...batch];
+        })
+        .catch(() => {
+          allLoaded = true;
+        });
+    }
   };
 
   onMount(() => {
     more(10);
-    iobserver = new IntersectionObserver(() => more(3), {
-      threshold: 0,
-      rootMargin: "0px 0px 50px",
-    });
-    iobserver.observe(iotarget);
   });
 </script>
 
 <style>
   .gallery {
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
     line-height: 0;
     overflow-y: auto;
     padding: 0 0.5em;
   }
-  img {
+  .photo {
     cursor: pointer;
     width: 100%;
   }
-  img + img {
+  .photo + .photo {
     padding-top: 0.5em;
   }
-  .iotarget {
+  .observer {
     width: 100%;
     flex-grow: 1;
+    min-height: 10em;
     display: block;
-    min-height: 100%;
+  }
+  .observer.allLoaded {
     display: none;
-    margin: auto;
   }
-  .iotarget.visible {
-    display: block;
-  }
-
   #scrollbar::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: var(--theme0);
   }
 
   #scrollbar::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
     background-color: var(--theme1);
   }
 
@@ -75,12 +69,17 @@
 
 <div id="scrollbar" class="gallery">
   {#each gallery as photo (photo)}
-    <img
-      on:click={() => setSelected(photo)}
-      on:load={() => (unloaded -= 1)}
-      alt="generic photograph"
-      src={src(photo)}
-      srcset={srcset(photo)} />
+    <div
+      class="photo"
+      on:click={() => {
+        selected = photo;
+      }}>
+      <Photo {photo} sizes="25vw" />
+    </div>
   {/each}
-  <div class="iotarget" class:visible={!loading} bind:this={iotarget} />
+
+  <div
+    class="observer"
+    class:allLoaded
+    use:iobserve={{ onIntersect: () => more(3), delay: 2000, cooldown: 100 }} />
 </div>
