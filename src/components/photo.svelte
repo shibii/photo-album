@@ -1,41 +1,27 @@
 <script>
-  import { onDestroy, onMount } from "svelte";
-  import { srcstr, srcsetstr } from "../util/util";
+  import { iobserve } from "../actions/iobserve";
+  import { srcsetstr, srcstr } from "../util/util";
 
   export let photo;
-  export let alt = "generic photograph";
-  export let sizes = "100vw";
-
-  let iotarget;
-  let iobserver;
-  let loaded = false;
-
+  export let sizes;
+  let srcset;
+  let onLoad;
+  let loaded;
   $: src = srcstr(photo);
-  $: srcset = loaded ? srcsetstr(photo) : null;
-
-  iobserver = new IntersectionObserver(() => {
-    iotarget.onload = () => {
-      loaded = true;
-    };
-    iobserver.unobserve(iotarget);
-  });
-
   $: onChange(photo);
+
   const onChange = () => {
-    if (iotarget) {
-      loaded = false;
-      delete iotarget.onload;
-      srcset = null;
-      iobserver.unobserve(iotarget);
-      iobserver.observe(iotarget);
-    }
+    srcset = null;
+    loaded = false;
+    onLoad = null;
   };
 
-  onMount(onChange);
-
-  onDestroy(() => {
-    iobserver.unobserve(iotarget);
-  });
+  const onIntersect = () => {
+    srcset = srcsetstr(photo);
+    onLoad = () => {
+      loaded = true;
+    };
+  };
 </script>
 
 <style>
@@ -43,12 +29,19 @@
     width: 100%;
     height: auto;
     object-fit: contain;
-    filter: blur(3px);
+    filter: blur(4px);
   }
   :global(img.loaded) {
     filter: none;
-    transition: filter 250ms linear;
+    transition: filter 100ms linear;
   }
 </style>
 
-<img class:loaded {src} {srcset} {alt} {sizes} bind:this={iotarget} />
+<img
+  class:loaded
+  on:load={onLoad}
+  use:iobserve={{ onIntersect, update: photo }}
+  {src}
+  {srcset}
+  {sizes}
+  alt="generic" />
