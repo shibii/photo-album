@@ -1,40 +1,37 @@
-<script context="module">
-  let iobserver;
-  iobserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.srcset = entry.target.dataset.srcset;
-        delete entry.target.dataset.srcset;
-        entry.target.onload = () => {
-          entry.target.classList.add("loaded");
-        };
-        iobserver.unobserve(entry.target);
-      }
-    });
-  });
-</script>
-
 <script>
   import { onDestroy, onMount } from "svelte";
-  import { src, srcset } from "../util/util";
+  import { srcstr, srcsetstr } from "../util/util";
 
   export let photo;
-  export let alt;
+  export let alt = "generic photograph";
   export let sizes = "100vw";
-  let iotarget;
 
-  $: {
+  let iotarget;
+  let iobserver;
+  let loaded = false;
+
+  $: src = srcstr(photo);
+  $: srcset = loaded ? srcsetstr(photo) : null;
+
+  iobserver = new IntersectionObserver(() => {
+    iotarget.onload = () => {
+      loaded = true;
+    };
+    iobserver.unobserve(iotarget);
+  });
+
+  $: onChange(photo);
+  const onChange = () => {
     if (iotarget) {
-      delete iotarget.srcset;
-      iotarget.classList.remove("loaded");
-      iotarget.dataset.srcset = srcset(photo);
+      loaded = false;
+      delete iotarget.onload;
+      srcset = null;
+      iobserver.unobserve(iotarget);
       iobserver.observe(iotarget);
     }
-  }
+  };
 
-  onMount(() => {
-    iobserver.observe(iotarget);
-  });
+  onMount(onChange);
 
   onDestroy(() => {
     iobserver.unobserve(iotarget);
@@ -50,17 +47,8 @@
   }
   :global(img.loaded) {
     filter: none;
-    transition: filter 500ms linear;
+    transition: filter 250ms linear;
   }
 </style>
 
-{#if iotarget && iotarget.classList.contains('loaded')}
-  <img src={src(photo)} {alt} bind:this={iotarget} />
-{:else}
-  <img
-    src={src(photo)}
-    data-srcset={srcset(photo)}
-    {alt}
-    {sizes}
-    bind:this={iotarget} />
-{/if}
+<img class:loaded {src} {srcset} {alt} {sizes} bind:this={iotarget} />
