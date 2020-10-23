@@ -2,11 +2,12 @@
   --theme0: #0b0f16;
   --theme1: #161f2e;
   --theme2: #1f2d46;
+  --theme3: #2e63be;
 }
 
 html {
   box-sizing: border-box;
-  height: 100vh;
+  height: 100%;
 }
 
 *,
