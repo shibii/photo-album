@@ -25,6 +25,6 @@
 
 <div on:click={() => overlay.set(null)} class="overlay" class:visible>
   {#if $overlay}
-    <Photo sizes="100vw" photo={$overlay} />
+    <Photo sizes="100vw" photo={$overlay} alt="generic" />
   {/if}
 </div>

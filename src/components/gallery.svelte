@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { photos } from "../stores/photos";
   import Photo from "./photo.svelte";
-  import { iobserve } from "../actions/iobserve";
+  import { iobserve } from "@shibiii/svelte-iobserve";
   import Spinner from "./spinner.svelte";
 
   export let selected;
@@ -75,7 +75,7 @@
       on:click={() => {
         selected = photo;
       }}>
-      <Photo {photo} sizes="25vw" />
+      <Photo {photo} sizes="25vw" alt="generic" />
     </div>
   {/each}
 
