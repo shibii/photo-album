@@ -1,7 +1,8 @@
 <script>
-  import { iobserve } from "../actions/iobserve";
+  import { iobserve } from "@shibiii/svelte-iobserve";
   import { srcsetstr, srcstr } from "../util/util";
 
+  export let alt;
   export let photo;
   export let sizes;
   let srcset;
@@ -40,8 +41,8 @@
 <img
   class:loaded
   on:load={onLoad}
-  use:iobserve={{ onIntersect, update: photo }}
+  use:iobserve={{ onIntersect, update: photo, once: true }}
   {src}
   {srcset}
   {sizes}
-  alt="generic" />
+  {alt} />
