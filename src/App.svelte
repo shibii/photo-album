@@ -6,6 +6,7 @@
   import { onMount } from "svelte";
   import Photo from "./components/photo.svelte";
   import Overlay from "./components/overlay.svelte";
+  import About from "./components/about.svelte";
 
   let selected;
 
@@ -37,12 +38,13 @@
 </style>
 
 <Overlay />
+<About />
 
 <div class="layout">
   <div class="gallery">
     <Gallery bind:selected />
   </div>
   <div class="photo" on:click={() => overlay.set(selected)}>
-    <Photo photo={selected} sizes="75vw" />
+    <Photo photo={selected} sizes="75vw" alt="generic" />
   </div>
 </div>
