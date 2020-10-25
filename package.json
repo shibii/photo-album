@@ -1,4 +1,5 @@
 {
+  "homepage": "/photo-album",
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
