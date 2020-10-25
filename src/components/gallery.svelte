@@ -55,16 +55,16 @@
     display: none;
   }
   #scrollbar::-webkit-scrollbar-track {
-    background-color: var(--theme0);
-  }
-
-  #scrollbar::-webkit-scrollbar {
-    width: 10px;
     background-color: var(--theme1);
   }
 
-  #scrollbar::-webkit-scrollbar-thumb {
+  #scrollbar::-webkit-scrollbar {
+    width: 8px;
     background-color: var(--theme2);
+  }
+
+  #scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--theme3);
   }
 </style>
 
