@@ -62,7 +62,7 @@ function create_each_block(key_1, ctx) {
 		c() {
 			div = element("div");
 			create_component(photo.$$.fragment);
-			attr(div, "class", "photo svelte-wpmwyj");
+			attr(div, "class", "photo svelte-93pf5");
 			this.first = div;
 		},
 		m(target, anchor) {
@@ -132,10 +132,10 @@ function create_fragment(ctx) {
 			t = space();
 			div0 = element("div");
 			create_component(spinner.$$.fragment);
-			attr(div0, "class", "observer svelte-wpmwyj");
+			attr(div0, "class", "observer svelte-93pf5");
 			toggle_class(div0, "allLoaded", /*allLoaded*/ ctx[2]);
 			attr(div1, "id", "scrollbar");
-			attr(div1, "class", "gallery svelte-wpmwyj");
+			attr(div1, "class", "gallery svelte-93pf5");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
