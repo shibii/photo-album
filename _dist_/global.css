@@ -1,0 +1,32 @@
+:root {
+  --theme0: #0b0f16;
+  --theme1: #161f2e;
+  --theme2: #1f2d46;
+  --theme3: #2e63be;
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Commissioner", sans-serif;
+  height: 100%;
+  background-color: var(--theme0);
+}
+
+img {
+  display: block;
+}
