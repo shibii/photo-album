@@ -9,7 +9,7 @@
     "stage-build": "git add build",
     "commit-build": "git commit -m \"static build\"",
     "push-build": "git subtree push --prefix build origin gh-pages",
-    "deploy": "run-s build stage-build commit-build push-build"
+    "deploy": "run-s asset-parser image-sizes build stage-build commit-build push-build"
   },
   "dependencies": {
     "@shibiii/svelte-iobserve": "^0.1.0",
