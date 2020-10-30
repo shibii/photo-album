@@ -5,14 +5,16 @@
     "build": "snowpack build",
     "test": "jest",
     "asset-parser": "node asset-parser ./public/photos ./src/stores/assets.json",
-    "image-sizes": "node image-sizes public/photos/*/w1920.webp",
+    "metadata-generator": "node metadata-generator ./public/photos w1080.jpg",
+    "image-sizes": "node image-sizes public/photos/*/w1080.jpg",
     "stage-build": "git add build",
     "commit-build": "git commit -m \"static build\"",
     "push-build": "git subtree push --prefix build origin gh-pages",
-    "deploy": "run-s asset-parser image-sizes build stage-build commit-build push-build"
+    "process-assets": "run-s metadata-generator asset-parser image-sizes",
+    "deploy": "run-s process-assets build stage-build commit-build push-build"
   },
   "dependencies": {
-    "@shibiii/svelte-iobserve": "^0.1.0",
+    "@shibiii/svelte-iobserve": "^0.1.2",
     "svelte": "^3.24.0"
   },
   "devDependencies": {
