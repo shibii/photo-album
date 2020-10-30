@@ -1,29 +1,24 @@
 <script>
-  import { onMount } from "svelte";
   import { photos } from "../stores/photos";
   import Photo from "./photo.svelte";
   import { iobserve } from "@shibiii/svelte-iobserve";
   import Spinner from "./spinner.svelte";
 
   export let selected;
-  let gallery = [];
+  let all = photos.all();
+  let loaded = 10;
   let allLoaded = false;
+  $: gallery = all.slice(0, loaded);
 
   const more = (batchSize) => {
     if (!allLoaded) {
-      photos(batchSize)
-        .then((batch) => {
-          gallery = [...gallery, ...batch];
-        })
-        .catch(() => {
-          allLoaded = true;
-        });
+      loaded += batchSize;
+      if (loaded >= all.length) {
+        loaded = all.length;
+        allLoaded = true;
+      }
     }
   };
-
-  onMount(() => {
-    more(10);
-  });
 </script>
 
 <style>

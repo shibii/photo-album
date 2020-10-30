@@ -1,6 +1,6 @@
 <script>
   import "./global.css";
-  import photos from "./stores/assets.json";
+  import { photos } from "./stores/photos";
   import { overlay } from "./stores/overlay";
   import Gallery from "./components/gallery.svelte";
   import { onMount } from "svelte";
@@ -11,7 +11,8 @@
   let selected;
 
   onMount(() => {
-    selected = photos[Math.floor(Math.random() * photos.length)];
+    const all = photos.all();
+    selected = all[Math.floor(Math.random() * all.length)];
   });
 </script>
 
