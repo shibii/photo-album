@@ -1,4 +1,4 @@
-const { readdirSync, writeFileSync } = require("fs");
+const fs = require("fs");
 const { argv } = require("process");
 
 const path = argv[2];
@@ -9,9 +9,16 @@ if (!path || !outpath) {
   process.exit(1);
 }
 
-let folders = readdirSync(path, { withFileTypes: true })
+let folders = fs
+  .readdirSync(path, { withFileTypes: true })
   .filter((e) => e.isDirectory())
   .map((e) => e.name);
 
-const data = JSON.stringify(folders);
-writeFileSync(outpath, data);
+let assets = [];
+folders = folders.map((folder) => {
+  let metadata = fs.readFileSync(`${path}/${folder}/metadata.json`);
+  metadata = JSON.parse(metadata);
+  assets.push({ img: folder, ...metadata });
+});
+
+fs.writeFileSync(outpath, JSON.stringify(assets));
