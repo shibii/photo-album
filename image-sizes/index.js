@@ -10,16 +10,16 @@ if (!path) {
   process.exit(1);
 }
 
-const sizes = [60, 120, 240, 480, 960];
+const sizes = [120, 240, 480, 720];
 
 glob(path, {}, function (err, files) {
   if (err) console.log(err);
   files.forEach((file) => {
     sizes.forEach((size) => {
       sharp(file)
-        .webp({ quality: 70 })
+        .jpeg({ quality: 75, chromaSubsampling: "4:4:4" })
         .resize(size)
-        .toFile(file.replace(/w1920\.webp/, `w${size}.webp`))
+        .toFile(file.replace(/1080\.jpg/, `${size}.jpg`))
         .catch((err) => console.log(err));
     });
   });
