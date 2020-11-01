@@ -1,12 +1,12 @@
 <script>
   import { iobserve } from "@shibiii/svelte-iobserve";
   import { srcsetstr, srcstr } from "../util/util";
+  import { conditionalOnLoad } from "../actions/conditionalOnLoad";
 
   export let alt;
   export let photo;
   export let sizes;
   let srcset;
-  let onLoad;
   let loaded;
   $: src = srcstr(photo);
   $: onChange(photo);
@@ -14,14 +14,10 @@
   const onChange = () => {
     srcset = null;
     loaded = false;
-    onLoad = null;
   };
 
   const onIntersect = () => {
     srcset = srcsetstr(photo);
-    onLoad = () => {
-      loaded = true;
-    };
   };
 </script>
 
@@ -40,7 +36,8 @@
 
 <img
   class:loaded
-  on:load={onLoad}
+  on:conditionalOnLoad={() => (loaded = true)}
+  use:conditionalOnLoad={() => srcset}
   use:iobserve={{ onIntersect, update: photo, once: true }}
   {src}
   {srcset}
