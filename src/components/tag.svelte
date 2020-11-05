@@ -6,9 +6,9 @@
 
 <style>
   button {
-    border-radius: 3px;
+    border-radius: 4px;
     border: 1px solid;
-    padding: 0.1rem 0.5em;
+    padding: 0.1rem 0.5em 0;
     font-weight: bold;
     font-size: 0.75rem;
     background-color: var(--theme1);
