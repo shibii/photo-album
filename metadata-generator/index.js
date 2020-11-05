@@ -25,7 +25,7 @@ folders.forEach((folder) => {
       camera: metadata["Model"].description,
       software: metadata["Software"].description,
       artist: metadata["Artist"].description,
-      date: metadata["DateTimeOriginal"].value,
+      timestamp: metadata["DateTimeOriginal"].value,
       lens: metadata["LensModel"].description,
       tags: metadata["subject"].value.map((v) => v.value),
     };
