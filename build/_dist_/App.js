@@ -24,6 +24,8 @@ import About from "./components/about.js";
 import PhotoColumns from "./components/photoColumns.js";
 import Overlay from "./components/overlay.js";
 import GalleryNav from "./components/galleryNav.js";
+import { onMount } from "../web_modules/svelte.js";
+import { photos } from "./stores/photos.js";
 
 function create_fragment(ctx) {
 	let about;
@@ -114,6 +116,7 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let $photoroll;
 	component_subscribe($$self, photoroll, $$value => $$invalidate(0, $photoroll = $$value));
+	onMount(() => photoroll.set(photos.recent));
 	return [$photoroll];
 }
 

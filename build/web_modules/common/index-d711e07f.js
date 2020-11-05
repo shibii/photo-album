@@ -132,6 +132,14 @@ let current_component;
 function set_current_component(component) {
     current_component = component;
 }
+function get_current_component() {
+    if (!current_component)
+        throw new Error(`Function called outside component initialization`);
+    return current_component;
+}
+function onMount(fn) {
+    get_current_component().$$.on_mount.push(fn);
+}
 
 const dirty_components = [];
 const binding_callbacks = [];
@@ -435,4 +443,4 @@ class SvelteComponent {
     }
 }
 
-export { text as A, add_render_callback as B, add_resize_listener as C, SvelteComponent as S, append as a, attr as b, component_subscribe as c, create_component as d, destroy_component as e, detach as f, element as g, insert as h, init as i, space as j, transition_out as k, listen as l, mount_component as m, noop as n, action_destroyer as o, check_outros as p, group_outros as q, run_all as r, safe_not_equal as s, transition_in as t, outro_and_destroy_block as u, toggle_class as v, update_keyed_each as w, empty as x, is_function as y, set_data as z };
+export { set_data as A, text as B, add_render_callback as C, add_resize_listener as D, SvelteComponent as S, append as a, attr as b, component_subscribe as c, create_component as d, destroy_component as e, detach as f, element as g, insert as h, init as i, space as j, transition_out as k, listen as l, mount_component as m, noop as n, onMount as o, action_destroyer as p, check_outros as q, run_all as r, safe_not_equal as s, transition_in as t, group_outros as u, outro_and_destroy_block as v, toggle_class as w, update_keyed_each as x, empty as y, is_function as z };
