@@ -42,6 +42,10 @@ const generateMonths = () => {
   return months;
 };
 
+const getRecent = (size) => {
+  return assets.sort((a, b) => b.timestamp - a.timestamp).slice(0, size);
+};
+
 const byTag = (tag, subset) => {
   let set = subset || assets;
   return set.filter((photo) => photo.tags.includes(tag));
@@ -55,5 +59,6 @@ const byMonth = (month, subset) => {
 const all = assets;
 const tags = generateTags();
 const months = generateMonths();
+const recent = getRecent(30);
 
-export const photos = { all, tags, months, byTag, byMonth };
+export const photos = { all, tags, months, byTag, byMonth, recent };

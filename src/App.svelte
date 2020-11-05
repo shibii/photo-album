@@ -5,6 +5,10 @@
   import PhotoColumns from "./components/photoColumns.svelte";
   import Overlay from "./components/overlay.svelte";
   import GalleryNav from "./components/galleryNav.svelte";
+  import { onMount } from "svelte";
+  import { photos } from "./stores/photos";
+
+  onMount(() => photoroll.set(photos.recent));
 </script>
 
 <style>
