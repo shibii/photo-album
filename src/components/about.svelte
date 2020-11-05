@@ -23,6 +23,7 @@
     border: 1px solid var(--theme2);
     border-radius: 0.5em;
     color: var(--theme3);
+    z-index: 1;
   }
   p + p {
     margin-top: 1em;
