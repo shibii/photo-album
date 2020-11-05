@@ -20,5 +20,6 @@ folders = folders.map((folder) => {
   metadata = JSON.parse(metadata);
   assets.push({ img: folder, ...metadata });
 });
+assets = assets.reverse();
 
 fs.writeFileSync(outpath, JSON.stringify(assets));
