@@ -10,7 +10,7 @@
     border: 1px solid;
     padding: 0.1rem 0.5em;
     font-weight: bold;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     background-color: var(--theme1);
     color: var(--contrast0);
   }

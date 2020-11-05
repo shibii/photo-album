@@ -8,17 +8,18 @@
 </script>
 
 <style>
-  h5 {
-    margin-bottom: 0.1em;
+  h4 {
+    margin-bottom: 0.2em;
     margin-top: 1em;
   }
   div.tag {
     display: inline-block;
     margin-right: 2px;
+    margin-bottom: 1px;
   }
 </style>
 
-<h5>browse photos by tag:</h5>
+<h4>browse photos by tag:</h4>
 {#each tags as tag (tag)}
   <div class="tag">
     <Tag
@@ -28,7 +29,7 @@
   </div>
 {/each}
 
-<h5>browse photos by month:</h5>
+<h4>browse photos by month:</h4>
 {#each months as month (month)}
   <div class="tag">
     <Tag
