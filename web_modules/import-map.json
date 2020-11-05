@@ -2,6 +2,7 @@
   "imports": {
     "@shibiii/svelte-iobserve": "./@shibiii/svelte-iobserve.js",
     "date-fns": "./date-fns.js",
+    "svelte": "./svelte.js",
     "svelte/internal": "./svelte/internal.js",
     "svelte/store": "./svelte/store.js"
   }
