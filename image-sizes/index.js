@@ -19,7 +19,7 @@ glob(path, {}, function (err, files) {
       sharp(file)
         .jpeg({ quality: 75, chromaSubsampling: "4:4:4" })
         .resize(size)
-        .toFile(file.replace(/1080\.jpg/, `${size}.jpg`))
+        .toFile(file.replace(/1080w\.jpg/, `${size}w.jpg`))
         .catch((err) => console.log(err));
     });
   });

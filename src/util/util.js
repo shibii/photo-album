@@ -1,8 +1,8 @@
 export const srcstr = (photo) => {
-  if (photo) return `photos/${photo.img}/w120.jpg`;
+  if (photo) return `photos/${photo.img}/120w.jpg`;
 };
 
 export const srcsetstr = (photo) => {
   if (photo)
-    return `photos/${photo.img}/w120.jpg 120w, photos/${photo.img}/w240.jpg 240w, photos/${photo.img}/w480.jpg 480w, photos/${photo.img}/w720.jpg 720w, photos/${photo.img}/w1080.jpg 1080w`;
+    return `photos/${photo.img}/120w.jpg 120w, photos/${photo.img}/240w.jpg 240w, photos/${photo.img}/480w.jpg 480w, photos/${photo.img}/720w.jpg 720w, photos/${photo.img}/1080w.jpg 1080w`;
 };
