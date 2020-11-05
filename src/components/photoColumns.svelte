@@ -16,7 +16,7 @@
 <style>
   .group {
     column-width: 320px;
-    column-gap: 1em;
+    column-gap: 1.5em;
     column-fill: balance;
     line-height: 0;
   }
@@ -24,7 +24,7 @@
     cursor: pointer;
   }
   .photo + .photo {
-    margin-top: 1em;
+    margin-top: 1.5em;
   }
 </style>
 

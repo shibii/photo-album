@@ -41,12 +41,12 @@
     position: absolute;
     top: 0.5em;
     left: 0.5em;
-    width: 100%;
     font-size: 0.75rem;
     color: #ffffff;
     font-weight: lighter;
-    text-shadow: 0 0 8px #000000, 0 0 8px #222222, 0 0 8px #000000,
-      0 0 8px #222222;
+    text-shadow: 1px 0 8px #000000, 0 1px 8px #222222, 1px 0 10px #000000,
+      0 1px 10px #222222, 1px 0 12px #222222, 0 1px 12px #222222;
+    padding: 0.3em;
     line-height: 1.5em;
     visibility: hidden;
   }

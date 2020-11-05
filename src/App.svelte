@@ -9,6 +9,7 @@
 
 <style>
   .header {
+    margin: 2em 0;
   }
   .layout {
     margin: 2em 10%;
@@ -17,6 +18,7 @@
     margin: 1em 0;
   }
   .photo-columns {
+    margin-top: 2em;
   }
 </style>
 
