@@ -31,7 +31,8 @@ function create_if_block(ctx) {
 			props: {
 				sizes: "100vw",
 				photo: /*$overlay*/ ctx[1],
-				alt: "generic"
+				alt: "generic",
+				overlay: true
 			}
 		});
 
@@ -74,7 +75,7 @@ function create_fragment(ctx) {
 		c() {
 			div = element("div");
 			if (if_block) if_block.c();
-			attr(div, "class", "overlay svelte-7w1wqw");
+			attr(div, "class", "overlay svelte-1djj8h1");
 			toggle_class(div, "visible", /*visible*/ ctx[0]);
 		},
 		m(target, anchor) {
