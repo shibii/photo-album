@@ -19,8 +19,8 @@
     width: auto;
     max-width: 19em;
     height: auto;
-    padding: 0.5em;
-    border: 2px solid var(--theme2);
+    padding: 0.4em;
+    border: 1px solid var(--theme2);
     border-radius: 0.5em;
     color: var(--theme3);
   }
@@ -40,9 +40,13 @@
       <a href="https://svelte.dev/">svelte</a>
       front-end javascript framework.
     </p>
+    <p>
+      Source code is available at
+      <a href="https://github.com/shibii/photo-album/tree/master">github</a>.
+    </p>
     <p>All presented photographs have been taken by Seppo Kilpeläinen.</p>
     <p>
-      Gear and software: Canon EOS 600D camera with stock lens, edited in
+      Gear and software: Canon EOS 600D camera with kit lens, edited in
       <a href="https://www.darktable.org/">darktable</a>.
     </p>
   {:else}
