@@ -1,11 +1,7 @@
 <script>
-  import { photoroll } from "../stores/photoroll";
-  import { photos } from "../stores/photos";
-
   export let tag;
-  const setPhotoroll = () => {
-    photoroll.set(photos.byTag(tag.tag));
-  };
+  export let count;
+  export let setPhotoroll;
 </script>
 
 <style>
@@ -27,4 +23,4 @@
   }
 </style>
 
-<button on:click={setPhotoroll}> {tag.tag}<span>#{tag.count}</span> </button>
+<button on:click={setPhotoroll}> {tag}<span>#{count}</span> </button>
