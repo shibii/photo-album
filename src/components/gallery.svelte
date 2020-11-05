@@ -77,7 +77,8 @@
   <div
     class="observer"
     class:allLoaded
-    use:iobserve={{ onIntersect: () => more(3), delay: 2500, cooldown: 500 }}>
+    on:intersection={() => more(3)}
+    use:iobserve={{ delay: 2500, cooldown: 500 }}>
     <Spinner />
   </div>
 </div>
