@@ -1,51 +1,36 @@
 <script>
   import "./global.css";
-  import { photos } from "./stores/photos";
-  import { overlay } from "./stores/overlay";
-  import Gallery from "./components/gallery.svelte";
-  import { onMount } from "svelte";
-  import Photo from "./components/photo.svelte";
-  import Overlay from "./components/overlay.svelte";
+  import { photoroll } from "./stores/photoroll";
   import About from "./components/about.svelte";
-
-  let selected;
-
-  onMount(() => {
-    const all = photos.all();
-    selected = all[Math.floor(Math.random() * all.length)];
-  });
+  import PhotoColumns from "./components/photoColumns.svelte";
+  import Overlay from "./components/overlay.svelte";
+  import GalleryNav from "./components/galleryNav.svelte";
 </script>
 
 <style>
+  .header {
+  }
   .layout {
-    height: 100%;
-    display: grid;
-    grid-template-areas: "gallery photo";
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 100%;
+    margin: 2em 10%;
   }
-  .gallery {
-    grid-area: gallery;
-    height: 100%;
+  .gallery-nav {
+    margin: 1em 0;
   }
-  .photo {
-    grid-area: photo;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    cursor: pointer;
-    padding: 0 0.5em;
+  .photo-columns {
   }
 </style>
 
-<Overlay />
 <About />
+<Overlay />
 
 <div class="layout">
-  <div class="gallery">
-    <Gallery bind:selected />
+  <div class="header">
+    <h1>Photo album by Seppo Kilpeläinen</h1>
   </div>
-  <div class="photo" on:click={() => overlay.set(selected)}>
-    <Photo photo={selected} sizes="75vw" alt="generic" />
+  <div class="gallery-nav">
+    <GalleryNav />
+  </div>
+  <div class="photo-columns">
+    <PhotoColumns photos={$photoroll} />
   </div>
 </div>
