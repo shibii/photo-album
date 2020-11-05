@@ -1,59 +1,62 @@
+function createCommonjsModule(fn, basedir, module) {
+	return module = {
+		path: basedir,
+		exports: {},
+		require: function (path, base) {
+			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+		}
+	}, fn(module, module.exports), module.exports;
+}
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+}
+
+var dist = createCommonjsModule(function (module, exports) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.iobserve = void 0;
 var iosupported = "IntersectionObserver" in window;
-
-const iobserve = (
-  node,
-  { onIntersect, delay, cooldown, once, update, fallback }
-) => {
-  if (!iosupported) {
-    if (fallback) fallback();
-    return;
-  }
-
-  if (!onIntersect) {
-    throw new Error("onIntersect parameter must be passed");
-  }
-  if (typeof onIntersect !== "function") {
-    throw new Error("onIntersect parameter must be a function");
-  }
-  if (delay && typeof delay !== "number") {
-    throw new Error("delay parameter must be a number");
-  }
-  if (cooldown && typeof cooldown !== "number") {
-    throw new Error("cooldown parameter must be a number");
-  }
-
-  let timeout;
-
-  const observer = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting === true) {
-      onIntersect();
-      if (once) return observer.unobserve(node);
-      if (cooldown) {
-        observer.unobserve(node);
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-          observer.observe(node);
-        }, cooldown);
-      }
+exports.iobserve = function (node, config) {
+    if (!iosupported) {
+        if (config.fallback)
+            config.fallback();
+        return;
     }
-  });
-
-  clearTimeout(timeout);
-  timeout = setTimeout(
-    () => {
-      observer.observe(node);
-    },
-    delay ? delay : 0
-  );
-
-  return {
-    update: (update) => {
-      clearTimeout(timeout);
-      observer.unobserve(node);
-      observer.observe(node);
-    },
-    destroy: () => observer.unobserve(node),
-  };
+    var onIntersection = function (entry) {
+        node.dispatchEvent(new CustomEvent("intersection", { detail: entry }));
+    };
+    var timeout = null;
+    var observer = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting === true) {
+            onIntersection(entries[0]);
+            if (config.once)
+                return observer.unobserve(node);
+            if (config.cooldown) {
+                observer.unobserve(node);
+                if (timeout)
+                    clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    observer.observe(node);
+                }, config.cooldown);
+            }
+        }
+    }, config.options);
+    if (timeout)
+        clearTimeout(timeout);
+    timeout = setTimeout(function () {
+        observer.observe(node);
+    }, config.delay ? config.delay : 0);
+    return {
+        update: function (update) {
+            if (timeout)
+                clearTimeout(timeout);
+            observer.unobserve(node);
+            observer.observe(node);
+        },
+        destroy: function () { return observer.unobserve(node); },
+    };
 };
+});
 
+var iobserve = dist.iobserve;
 export { iobserve };

@@ -31,48 +31,61 @@ function create_else_block(ctx) {
 	};
 }
 
-// (37:2) {#if mouseover}
+// (38:2) {#if mouseover}
 function create_if_block(ctx) {
 	let p0;
 	let t3;
 	let p1;
-	let t5;
+	let t7;
 	let p2;
+	let t9;
+	let p3;
 
 	return {
 		c() {
 			p0 = element("p");
 
 			p0.innerHTML = `This photo album website was made using
-      <a href="https://svelte.dev/" class="svelte-128fgrc">svelte</a>
+      <a href="https://svelte.dev/" class="svelte-s0p7u1">svelte</a>
       front-end javascript framework.`;
 
 			t3 = space();
 			p1 = element("p");
-			p1.textContent = "All presented photographs have been taken by Seppo Kilpeläinen.";
-			t5 = space();
+
+			p1.innerHTML = `Source code is available at
+      <a href="https://github.com/shibii/photo-album/tree/master" class="svelte-s0p7u1">github</a>.`;
+
+			t7 = space();
 			p2 = element("p");
+			p2.textContent = "All presented photographs have been taken by Seppo Kilpeläinen.";
+			t9 = space();
+			p3 = element("p");
 
-			p2.innerHTML = `Gear and software: Canon EOS 600D camera with stock lens, edited in
-      <a href="https://www.darktable.org/" class="svelte-128fgrc">darktable</a>.`;
+			p3.innerHTML = `Gear and software: Canon EOS 600D camera with kit lens, edited in
+      <a href="https://www.darktable.org/" class="svelte-s0p7u1">darktable</a>.`;
 
-			attr(p0, "class", "svelte-128fgrc");
-			attr(p1, "class", "svelte-128fgrc");
-			attr(p2, "class", "svelte-128fgrc");
+			attr(p0, "class", "svelte-s0p7u1");
+			attr(p1, "class", "svelte-s0p7u1");
+			attr(p2, "class", "svelte-s0p7u1");
+			attr(p3, "class", "svelte-s0p7u1");
 		},
 		m(target, anchor) {
 			insert(target, p0, anchor);
 			insert(target, t3, anchor);
 			insert(target, p1, anchor);
-			insert(target, t5, anchor);
+			insert(target, t7, anchor);
 			insert(target, p2, anchor);
+			insert(target, t9, anchor);
+			insert(target, p3, anchor);
 		},
 		d(detaching) {
 			if (detaching) detach(p0);
 			if (detaching) detach(t3);
 			if (detaching) detach(p1);
-			if (detaching) detach(t5);
+			if (detaching) detach(t7);
 			if (detaching) detach(p2);
+			if (detaching) detach(t9);
+			if (detaching) detach(p3);
 		}
 	};
 }
@@ -94,7 +107,7 @@ function create_fragment(ctx) {
 		c() {
 			div = element("div");
 			if_block.c();
-			attr(div, "class", "hoverable svelte-128fgrc");
+			attr(div, "class", "hoverable svelte-s0p7u1");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);

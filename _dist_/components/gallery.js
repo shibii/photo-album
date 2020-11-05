@@ -16,6 +16,7 @@ import {
 	listen,
 	mount_component,
 	outro_and_destroy_block,
+	run_all,
 	safe_not_equal,
 	space,
 	toggle_class,
@@ -24,7 +25,6 @@ import {
 	update_keyed_each
 } from "../../web_modules/svelte/internal.js";
 
-import { onMount } from "../../web_modules/svelte.js";
 import { photos } from "../stores/photos.js";
 import Photo from "./photo.js";
 import { iobserve } from "../../web_modules/@shibiii/svelte-iobserve.js";
@@ -32,11 +32,11 @@ import Spinner from "./spinner.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[6] = list[i];
+	child_ctx[8] = list[i];
 	return child_ctx;
 }
 
-// (72:2) {#each gallery as photo (photo)}
+// (67:2) {#each gallery as photo (photo)}
 function create_each_block(key_1, ctx) {
 	let div;
 	let photo;
@@ -46,14 +46,14 @@ function create_each_block(key_1, ctx) {
 
 	photo = new Photo({
 			props: {
-				photo: /*photo*/ ctx[6],
+				photo: /*photo*/ ctx[8],
 				sizes: "25vw",
 				alt: "generic"
 			}
 		});
 
 	function click_handler(...args) {
-		return /*click_handler*/ ctx[4](/*photo*/ ctx[6], ...args);
+		return /*click_handler*/ ctx[4](/*photo*/ ctx[8], ...args);
 	}
 
 	return {
@@ -78,7 +78,7 @@ function create_each_block(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 			const photo_changes = {};
-			if (dirty & /*gallery*/ 2) photo_changes.photo = /*photo*/ ctx[6];
+			if (dirty & /*gallery*/ 4) photo_changes.photo = /*photo*/ ctx[8];
 			photo.$set(photo_changes);
 		},
 		i(local) {
@@ -110,8 +110,8 @@ function create_fragment(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	let each_value = /*gallery*/ ctx[1];
-	const get_key = ctx => /*photo*/ ctx[6];
+	let each_value = /*gallery*/ ctx[2];
+	const get_key = ctx => /*photo*/ ctx[8];
 
 	for (let i = 0; i < each_value.length; i += 1) {
 		let child_ctx = get_each_context(ctx, each_value, i);
@@ -133,7 +133,7 @@ function create_fragment(ctx) {
 			div0 = element("div");
 			create_component(spinner.$$.fragment);
 			attr(div0, "class", "observer svelte-93pf5");
-			toggle_class(div0, "allLoaded", /*allLoaded*/ ctx[2]);
+			toggle_class(div0, "allLoaded", /*allLoaded*/ ctx[1]);
 			attr(div1, "id", "scrollbar");
 			attr(div1, "class", "gallery svelte-93pf5");
 		},
@@ -150,25 +150,24 @@ function create_fragment(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = action_destroyer(iobserve_action = iobserve.call(null, div0, {
-					onIntersect: /*iobserve_function*/ ctx[5],
-					delay: 2500,
-					cooldown: 500
-				}));
+				dispose = [
+					listen(div0, "intersection", /*intersection_handler*/ ctx[5]),
+					action_destroyer(iobserve_action = iobserve.call(null, div0, { delay: 2500, cooldown: 500 }))
+				];
 
 				mounted = true;
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*selected, gallery*/ 3) {
-				const each_value = /*gallery*/ ctx[1];
+			if (dirty & /*selected, gallery*/ 5) {
+				const each_value = /*gallery*/ ctx[2];
 				group_outros();
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, div1, outro_and_destroy_block, create_each_block, t, get_each_context);
 				check_outros();
 			}
 
-			if (dirty & /*allLoaded*/ 4) {
-				toggle_class(div0, "allLoaded", /*allLoaded*/ ctx[2]);
+			if (dirty & /*allLoaded*/ 2) {
+				toggle_class(div0, "allLoaded", /*allLoaded*/ ctx[1]);
 			}
 		},
 		i(local) {
@@ -198,41 +197,47 @@ function create_fragment(ctx) {
 
 			destroy_component(spinner);
 			mounted = false;
-			dispose();
+			run_all(dispose);
 		}
 	};
 }
 
 function instance($$self, $$props, $$invalidate) {
 	let { selected } = $$props;
-	let gallery = [];
+	let all = photos.all();
+	let loaded = 10;
 	let allLoaded = false;
 
 	const more = batchSize => {
 		if (!allLoaded) {
-			photos(batchSize).then(batch => {
-				$$invalidate(1, gallery = [...gallery, ...batch]);
-			}).catch(() => {
-				$$invalidate(2, allLoaded = true);
-			});
+			$$invalidate(6, loaded += batchSize);
+
+			if (loaded >= all.length) {
+				$$invalidate(6, loaded = all.length);
+				$$invalidate(1, allLoaded = true);
+			}
 		}
 	};
-
-	onMount(() => {
-		more(10);
-	});
 
 	const click_handler = photo => {
 		$$invalidate(0, selected = photo);
 	};
 
-	const iobserve_function = () => more(3);
+	const intersection_handler = () => more(3);
 
 	$$self.$$set = $$props => {
 		if ("selected" in $$props) $$invalidate(0, selected = $$props.selected);
 	};
 
-	return [selected, gallery, allLoaded, more, click_handler, iobserve_function];
+	let gallery;
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*loaded*/ 64) {
+			$: $$invalidate(2, gallery = all.slice(0, loaded));
+		}
+	};
+
+	return [selected, allLoaded, gallery, more, click_handler, intersection_handler];
 }
 
 class Gallery extends SvelteComponent {

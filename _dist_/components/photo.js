@@ -3,6 +3,7 @@ import './photo.css.proxy.js';
 import {
 	SvelteComponent,
 	action_destroyer,
+	append,
 	attr,
 	detach,
 	element,
@@ -13,80 +14,125 @@ import {
 	noop,
 	run_all,
 	safe_not_equal,
+	set_data,
+	space,
+	text,
 	toggle_class
 } from "../../web_modules/svelte/internal.js";
 
 import { iobserve } from "../../web_modules/@shibiii/svelte-iobserve.js";
 import { srcsetstr, srcstr } from "../util/util.js";
+import { conditionalOnLoad } from "../actions/conditionalOnLoad.js";
+import { format } from "../../web_modules/date-fns.js";
 
 function create_fragment(ctx) {
+	let div1;
 	let img;
 	let img_src_value;
+	let conditionalOnLoad_action;
 	let iobserve_action;
+	let t0;
+	let div0;
+	let t1_value = /*photo*/ ctx[2].artist + "";
+	let t1;
+	let t2;
+	let t3_value = format(/*photo*/ ctx[2].timestamp, "d LLL y") + "";
+	let t3;
+	let br0;
+	let t4_value = /*photo*/ ctx[2].camera + "";
+	let t4;
+	let br1;
+	let t5_value = /*photo*/ ctx[2].lens + "";
+	let t5;
 	let mounted;
 	let dispose;
 
 	return {
 		c() {
+			div1 = element("div");
 			img = element("img");
+			t0 = space();
+			div0 = element("div");
+			t1 = text(t1_value);
+			t2 = text("\r\n    •\r\n    ");
+			t3 = text(t3_value);
+			br0 = element("br");
+			t4 = text(t4_value);
+			br1 = element("br");
+			t5 = text(t5_value);
 			if (img.src !== (img_src_value = /*src*/ ctx[6])) attr(img, "src", img_src_value);
-			attr(img, "srcset", /*srcset*/ ctx[3]);
-			attr(img, "sizes", /*sizes*/ ctx[2]);
-			attr(img, "alt", /*alt*/ ctx[0]);
-			attr(img, "class", "svelte-7ih2e");
+			attr(img, "srcset", /*srcset*/ ctx[4]);
+			attr(img, "sizes", /*sizes*/ ctx[3]);
+			attr(img, "alt", /*alt*/ ctx[1]);
+			attr(img, "class", "svelte-1xyxoap");
 			toggle_class(img, "loaded", /*loaded*/ ctx[5]);
+			attr(div0, "class", "overlay svelte-1xyxoap");
+			toggle_class(div0, "visible", /*overlay*/ ctx[0]);
+			attr(div1, "class", "container svelte-1xyxoap");
 		},
 		m(target, anchor) {
-			insert(target, img, anchor);
+			insert(target, div1, anchor);
+			append(div1, img);
+			append(div1, t0);
+			append(div1, div0);
+			append(div0, t1);
+			append(div0, t2);
+			append(div0, t3);
+			append(div0, br0);
+			append(div0, t4);
+			append(div0, br1);
+			append(div0, t5);
 
 			if (!mounted) {
 				dispose = [
-					listen(img, "load", function () {
-						if (is_function(/*onLoad*/ ctx[4])) /*onLoad*/ ctx[4].apply(this, arguments);
-					}),
-					action_destroyer(iobserve_action = iobserve.call(null, img, {
-						onIntersect: /*onIntersect*/ ctx[7],
-						update: /*photo*/ ctx[1],
-						once: true
-					}))
+					listen(img, "conditionalOnLoad", /*conditionalOnLoad_handler*/ ctx[7]),
+					action_destroyer(conditionalOnLoad_action = conditionalOnLoad.call(null, img, /*conditionalOnLoad_function*/ ctx[8])),
+					listen(img, "intersection", /*intersection_handler*/ ctx[9]),
+					action_destroyer(iobserve_action = iobserve.call(null, img, { update: /*photo*/ ctx[2], once: true })),
+					listen(div1, "mouseenter", /*mouseenter_handler*/ ctx[10]),
+					listen(div1, "mouseleave", /*mouseleave_handler*/ ctx[11])
 				];
 
 				mounted = true;
 			}
 		},
-		p(new_ctx, [dirty]) {
-			ctx = new_ctx;
-
+		p(ctx, [dirty]) {
 			if (dirty & /*src*/ 64 && img.src !== (img_src_value = /*src*/ ctx[6])) {
 				attr(img, "src", img_src_value);
 			}
 
-			if (dirty & /*srcset*/ 8) {
-				attr(img, "srcset", /*srcset*/ ctx[3]);
+			if (dirty & /*srcset*/ 16) {
+				attr(img, "srcset", /*srcset*/ ctx[4]);
 			}
 
-			if (dirty & /*sizes*/ 4) {
-				attr(img, "sizes", /*sizes*/ ctx[2]);
+			if (dirty & /*sizes*/ 8) {
+				attr(img, "sizes", /*sizes*/ ctx[3]);
 			}
 
-			if (dirty & /*alt*/ 1) {
-				attr(img, "alt", /*alt*/ ctx[0]);
+			if (dirty & /*alt*/ 2) {
+				attr(img, "alt", /*alt*/ ctx[1]);
 			}
 
-			if (iobserve_action && is_function(iobserve_action.update) && dirty & /*photo*/ 2) iobserve_action.update.call(null, {
-				onIntersect: /*onIntersect*/ ctx[7],
-				update: /*photo*/ ctx[1],
-				once: true
-			});
+			if (conditionalOnLoad_action && is_function(conditionalOnLoad_action.update) && dirty & /*srcset*/ 16) conditionalOnLoad_action.update.call(null, /*conditionalOnLoad_function*/ ctx[8]);
+			if (iobserve_action && is_function(iobserve_action.update) && dirty & /*photo*/ 4) iobserve_action.update.call(null, { update: /*photo*/ ctx[2], once: true });
 
 			if (dirty & /*loaded*/ 32) {
 				toggle_class(img, "loaded", /*loaded*/ ctx[5]);
+			}
+
+			if (dirty & /*photo*/ 4 && t1_value !== (t1_value = /*photo*/ ctx[2].artist + "")) set_data(t1, t1_value);
+			if (dirty & /*photo*/ 4 && t3_value !== (t3_value = format(/*photo*/ ctx[2].timestamp, "d LLL y") + "")) set_data(t3, t3_value);
+			if (dirty & /*photo*/ 4 && t4_value !== (t4_value = /*photo*/ ctx[2].camera + "")) set_data(t4, t4_value);
+			if (dirty & /*photo*/ 4 && t5_value !== (t5_value = /*photo*/ ctx[2].lens + "")) set_data(t5, t5_value);
+
+			if (dirty & /*overlay*/ 1) {
+				toggle_class(div0, "visible", /*overlay*/ ctx[0]);
 			}
 		},
 		i: noop,
 		o: noop,
 		d(detaching) {
-			if (detaching) detach(img);
+			if (detaching) detach(div1);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -97,49 +143,60 @@ function instance($$self, $$props, $$invalidate) {
 	let { alt } = $$props;
 	let { photo } = $$props;
 	let { sizes } = $$props;
+	let { overlay = false } = $$props;
 	let srcset;
-	let onLoad;
 	let loaded;
 
 	const onChange = () => {
-		$$invalidate(3, srcset = null);
+		$$invalidate(4, srcset = null);
 		$$invalidate(5, loaded = false);
-		$$invalidate(4, onLoad = null);
 	};
 
-	const onIntersect = () => {
-		$$invalidate(3, srcset = srcsetstr(photo));
-
-		$$invalidate(4, onLoad = () => {
-			$$invalidate(5, loaded = true);
-		});
-	};
+	const conditionalOnLoad_handler = () => $$invalidate(5, loaded = true);
+	const conditionalOnLoad_function = () => srcset;
+	const intersection_handler = () => $$invalidate(4, srcset = srcsetstr(photo));
+	const mouseenter_handler = () => $$invalidate(0, overlay = true);
+	const mouseleave_handler = () => $$invalidate(0, overlay = false);
 
 	$$self.$$set = $$props => {
-		if ("alt" in $$props) $$invalidate(0, alt = $$props.alt);
-		if ("photo" in $$props) $$invalidate(1, photo = $$props.photo);
-		if ("sizes" in $$props) $$invalidate(2, sizes = $$props.sizes);
+		if ("alt" in $$props) $$invalidate(1, alt = $$props.alt);
+		if ("photo" in $$props) $$invalidate(2, photo = $$props.photo);
+		if ("sizes" in $$props) $$invalidate(3, sizes = $$props.sizes);
+		if ("overlay" in $$props) $$invalidate(0, overlay = $$props.overlay);
 	};
 
 	let src;
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*photo*/ 2) {
+		if ($$self.$$.dirty & /*photo*/ 4) {
 			$: $$invalidate(6, src = srcstr(photo));
 		}
 
-		if ($$self.$$.dirty & /*photo*/ 2) {
-			$: onChange(photo);
+		if ($$self.$$.dirty & /*photo*/ 4) {
+			$: (photo, onChange());
 		}
 	};
 
-	return [alt, photo, sizes, srcset, onLoad, loaded, src, onIntersect];
+	return [
+		overlay,
+		alt,
+		photo,
+		sizes,
+		srcset,
+		loaded,
+		src,
+		conditionalOnLoad_handler,
+		conditionalOnLoad_function,
+		intersection_handler,
+		mouseenter_handler,
+		mouseleave_handler
+	];
 }
 
 class Photo extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { alt: 0, photo: 1, sizes: 2 });
+		init(this, options, instance, create_fragment, safe_not_equal, { alt: 1, photo: 2, sizes: 3, overlay: 0 });
 	}
 }
 

@@ -1,8 +1,9 @@
 :root {
-  --theme0: #19201f;
-  --theme1: #333b3a;
-  --theme2: #454b57;
-  --theme3: #676f7e;
+  --theme0: #f5f5f5;
+  --theme1: #eeeeee;
+  --theme2: #dfdfdf;
+  --theme3: #aaaaaa;
+  --contrast0: #313131;
 }
 
 html {
