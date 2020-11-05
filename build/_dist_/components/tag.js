@@ -32,8 +32,8 @@ function create_fragment(ctx) {
 			span = element("span");
 			t1 = text("#");
 			t2 = text(/*count*/ ctx[1]);
-			attr(span, "class", "svelte-9dpvxy");
-			attr(button, "class", "svelte-9dpvxy");
+			attr(span, "class", "svelte-mlynuv");
+			attr(button, "class", "svelte-mlynuv");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);

@@ -38,9 +38,9 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (21:0) {#each tags as tag (tag)}
+// (23:0) {#each tags as tag (tag)}
 function create_each_block_1(key_1, ctx) {
-	let span;
+	let div;
 	let tag;
 	let current;
 
@@ -60,14 +60,14 @@ function create_each_block_1(key_1, ctx) {
 		key: key_1,
 		first: null,
 		c() {
-			span = element("span");
+			div = element("div");
 			create_component(tag.$$.fragment);
-			attr(span, "class", "tag svelte-1wqbhv4");
-			this.first = span;
+			attr(div, "class", "tag svelte-jcdadb");
+			this.first = div;
 		},
 		m(target, anchor) {
-			insert(target, span, anchor);
-			mount_component(tag, span, null);
+			insert(target, div, anchor);
+			mount_component(tag, div, null);
 			current = true;
 		},
 		p(new_ctx, dirty) {
@@ -83,15 +83,15 @@ function create_each_block_1(key_1, ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(span);
+			if (detaching) detach(div);
 			destroy_component(tag);
 		}
 	};
 }
 
-// (31:0) {#each months as month (month)}
+// (33:0) {#each months as month (month)}
 function create_each_block(key_1, ctx) {
-	let span;
+	let div;
 	let tag;
 	let t;
 	let current;
@@ -112,16 +112,16 @@ function create_each_block(key_1, ctx) {
 		key: key_1,
 		first: null,
 		c() {
-			span = element("span");
+			div = element("div");
 			create_component(tag.$$.fragment);
 			t = space();
-			attr(span, "class", "tag svelte-1wqbhv4");
-			this.first = span;
+			attr(div, "class", "tag svelte-jcdadb");
+			this.first = div;
 		},
 		m(target, anchor) {
-			insert(target, span, anchor);
-			mount_component(tag, span, null);
-			append(span, t);
+			insert(target, div, anchor);
+			mount_component(tag, div, null);
+			append(div, t);
 			current = true;
 		},
 		p(new_ctx, dirty) {
@@ -137,19 +137,19 @@ function create_each_block(key_1, ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(span);
+			if (detaching) detach(div);
 			destroy_component(tag);
 		}
 	};
 }
 
 function create_fragment(ctx) {
-	let h50;
+	let h40;
 	let t1;
 	let each_blocks_1 = [];
 	let each0_lookup = new Map();
 	let t2;
-	let h51;
+	let h41;
 	let t4;
 	let each_blocks = [];
 	let each1_lookup = new Map();
@@ -175,8 +175,8 @@ function create_fragment(ctx) {
 
 	return {
 		c() {
-			h50 = element("h5");
-			h50.textContent = "browse photos by tag:";
+			h40 = element("h4");
+			h40.textContent = "browse photos by tag:";
 			t1 = space();
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
@@ -184,8 +184,8 @@ function create_fragment(ctx) {
 			}
 
 			t2 = space();
-			h51 = element("h5");
-			h51.textContent = "browse photos by month:";
+			h41 = element("h4");
+			h41.textContent = "browse photos by month:";
 			t4 = space();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -193,11 +193,11 @@ function create_fragment(ctx) {
 			}
 
 			each1_anchor = empty();
-			attr(h50, "class", "svelte-1wqbhv4");
-			attr(h51, "class", "svelte-1wqbhv4");
+			attr(h40, "class", "svelte-jcdadb");
+			attr(h41, "class", "svelte-jcdadb");
 		},
 		m(target, anchor) {
-			insert(target, h50, anchor);
+			insert(target, h40, anchor);
 			insert(target, t1, anchor);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
@@ -205,7 +205,7 @@ function create_fragment(ctx) {
 			}
 
 			insert(target, t2, anchor);
-			insert(target, h51, anchor);
+			insert(target, h41, anchor);
 			insert(target, t4, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -255,7 +255,7 @@ function create_fragment(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(h50);
+			if (detaching) detach(h40);
 			if (detaching) detach(t1);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
@@ -263,7 +263,7 @@ function create_fragment(ctx) {
 			}
 
 			if (detaching) detach(t2);
-			if (detaching) detach(h51);
+			if (detaching) detach(h41);
 			if (detaching) detach(t4);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
