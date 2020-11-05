@@ -9,15 +9,11 @@
   let srcset;
   let loaded;
   $: src = srcstr(photo);
-  $: onChange(photo);
+  $: photo, onChange();
 
   const onChange = () => {
     srcset = null;
     loaded = false;
-  };
-
-  const onIntersect = () => {
-    srcset = srcsetstr(photo);
   };
 </script>
 
@@ -38,7 +34,8 @@
   class:loaded
   on:conditionalOnLoad={() => (loaded = true)}
   use:conditionalOnLoad={() => srcset}
-  use:iobserve={{ onIntersect, update: photo, once: true }}
+  on:intersection={() => (srcset = srcsetstr(photo))}
+  use:iobserve={{ update: photo, once: true }}
   {src}
   {srcset}
   {sizes}
