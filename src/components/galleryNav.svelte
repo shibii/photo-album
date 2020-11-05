@@ -12,27 +12,28 @@
     margin-bottom: 0.1em;
     margin-top: 1em;
   }
-  .tag {
+  div.tag {
+    display: inline-block;
     margin-right: 2px;
   }
 </style>
 
 <h5>browse photos by tag:</h5>
 {#each tags as tag (tag)}
-  <span class="tag">
+  <div class="tag">
     <Tag
       tag={tag.tag}
       count={tag.count}
       setPhotoroll={() => photoroll.set(photos.byTag(tag.tag))} />
-  </span>
+  </div>
 {/each}
 
 <h5>browse photos by month:</h5>
 {#each months as month (month)}
-  <span class="tag">
+  <div class="tag">
     <Tag
       tag={month.month}
       count={month.count}
       setPhotoroll={() => photoroll.set(photos.byMonth(month.month))} />
-  </span>
+  </div>
 {/each}
