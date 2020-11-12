@@ -1,4 +1,4 @@
-#photo-album
+# photo-album
 
 A photo album project made with [svelte](https://svelte.dev/) using [snowpack](https://www.snowpack.dev/).
 
