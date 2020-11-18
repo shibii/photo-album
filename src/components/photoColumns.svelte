@@ -33,7 +33,7 @@
 <div class="group">
   {#each photos as photo, i (photo.img)}
     <!-- first photos width is bound to variable to calculate sizes hint -->
-    {#if i === 1}
+    {#if i === 0}
       <div
         bind:offsetWidth={imgWidth}
         class="photo"
