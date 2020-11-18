@@ -103,7 +103,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (36:4) {#if i === 1}
+// (36:4) {#if i === 0}
 function create_if_block(ctx) {
 	let div;
 	let photo;
@@ -182,7 +182,7 @@ function create_each_block(key_1, ctx) {
 	const if_blocks = [];
 
 	function select_block_type(ctx, dirty) {
-		if (/*i*/ ctx[12] === 1) return 0;
+		if (/*i*/ ctx[12] === 0) return 0;
 		return 1;
 	}
 
